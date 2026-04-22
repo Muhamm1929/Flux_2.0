@@ -59,6 +59,17 @@ export default function DirectChat({ conversationId, otherUser }: DirectChatProp
     setSending(true);
     const content = input.trim();
     setInput('');
+
+    const optimisticMessage: DirectMessage = {
+      id: Math.random().toString(),
+      conversation_id: conversationId,
+      sender_id: profile.id,
+      content,
+      created_at: new Date().toISOString(),
+      sender: profile,
+    };
+    setMessages((prev) => [...prev, optimisticMessage]);
+
     await supabase.from('direct_messages').insert({ conversation_id: conversationId, sender_id: profile.id, content });
     setSending(false);
     textareaRef.current?.focus();

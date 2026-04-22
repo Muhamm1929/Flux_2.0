@@ -87,6 +87,17 @@ export default function GroupChat({ group, groupId, onBack }: GroupChatProps) {
     setSending(true);
     const content = input.trim();
     setInput('');
+
+    const optimisticMessage: GroupMessage = {
+      id: Math.random().toString(),
+      group_id: groupId,
+      sender_id: profile.id,
+      content,
+      created_at: new Date().toISOString(),
+      sender: profile,
+    };
+    setMessages((prev) => [...prev, optimisticMessage]);
+
     await supabase.from('group_messages').insert({ group_id: groupId, sender_id: profile.id, content });
     setSending(false);
     textareaRef.current?.focus();
