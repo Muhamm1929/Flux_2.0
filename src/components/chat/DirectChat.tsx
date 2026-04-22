@@ -83,16 +83,16 @@ export default function DirectChat({ conversationId, otherUser }: DirectChatProp
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="px-6 py-4 border-b border-slate-800 flex items-center gap-3 bg-slate-900">
+    <div className="flex flex-col h-full w-full md:w-full">
+      <div className="px-4 md:px-6 py-4 border-b border-slate-800 flex items-center gap-3 bg-slate-900">
         <Avatar profile={otherUser} size="md" />
-        <div>
-          <div className="text-slate-100 font-semibold">{otherUser.username}</div>
+        <div className="flex-1 min-w-0">
+          <div className="text-slate-100 font-semibold truncate">{otherUser.username}</div>
           <StatusBadge profile={otherUser} />
         </div>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-4 space-y-1">
+      <div className="flex-1 overflow-y-auto p-2 md:p-4 space-y-1 pb-20 md:pb-0">
         {messages.length === 0 && (
           <div className="flex flex-col items-center justify-center h-full text-center">
             <Avatar profile={otherUser} size="lg" className="mb-4" />
@@ -118,8 +118,8 @@ export default function DirectChat({ conversationId, otherUser }: DirectChatProp
         <div ref={bottomRef} />
       </div>
 
-      <div className="px-4 py-4 border-t border-slate-800">
-        <div className="flex items-end gap-3">
+      <div className="fixed md:static bottom-0 left-0 right-0 md:bottom-auto px-2 md:px-4 py-4 border-t border-slate-800 bg-slate-900">
+        <div className="flex items-end gap-2 md:gap-3">
           <textarea
             ref={textareaRef}
             value={input}
@@ -127,13 +127,13 @@ export default function DirectChat({ conversationId, otherUser }: DirectChatProp
             onKeyDown={handleKeyDown}
             placeholder={`Message ${otherUser.username}...`}
             rows={1}
-            className="flex-1 resize-none px-4 py-3 bg-slate-800 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 text-sm leading-relaxed max-h-32 overflow-y-auto"
-            style={{ minHeight: '44px' }}
+            className="flex-1 resize-none px-3 md:px-4 py-2 md:py-3 bg-slate-800 border border-slate-700 rounded-lg md:rounded-xl text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 text-xs md:text-sm leading-relaxed max-h-32 overflow-y-auto"
+            style={{ minHeight: '40px' }}
           />
           <button
             onClick={sendMessage}
             disabled={!input.trim() || sending}
-            className="p-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-xl transition-colors flex-shrink-0"
+            className="p-2.5 md:p-3 bg-blue-500 hover:bg-blue-600 disabled:opacity-40 disabled:cursor-not-allowed text-white rounded-lg md:rounded-xl transition-colors flex-shrink-0"
           >
             <Send size={16} />
           </button>

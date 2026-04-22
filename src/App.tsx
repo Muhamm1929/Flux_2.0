@@ -40,16 +40,18 @@ function AppContent() {
   };
 
   return (
-    <div className="flex h-screen bg-slate-950">
-      <Sidebar
-        activeView={activeView}
-        onSelectView={setActiveView}
-        onCreateGroup={() => setShowCreateGroup(true)}
-        onJoinGroup={() => setShowJoinGroup(true)}
-        onOpenAdmin={() => setShowAdmin(true)}
-      />
+    <div className="flex flex-col md:flex-row h-screen bg-slate-950">
+      <div className="hidden md:block md:w-72">
+        <Sidebar
+          activeView={activeView}
+          onSelectView={setActiveView}
+          onCreateGroup={() => setShowCreateGroup(true)}
+          onJoinGroup={() => setShowJoinGroup(true)}
+          onOpenAdmin={() => setShowAdmin(true)}
+        />
+      </div>
 
-      <div className="flex-1 bg-slate-900">
+      <div className="flex-1 bg-slate-900 flex flex-col min-h-0">
         {activeView.type === 'empty' && (
           <div className="h-full flex flex-col items-center justify-center text-center">
             <div className="w-20 h-20 rounded-2xl bg-blue-500/10 flex items-center justify-center mb-6">
@@ -80,6 +82,17 @@ function AppContent() {
       )}
       {showJoinGroup && <JoinGroupModal onClose={() => setShowJoinGroup(false)} onJoined={handleGroupJoined} />}
       {showAdmin && <AdminPanel onClose={() => setShowAdmin(false)} />}
+
+      {activeView.type !== 'empty' && (
+        <div className="md:hidden fixed bottom-4 left-4 right-4">
+          <button
+            onClick={() => setActiveView({ type: 'empty' })}
+            className="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-medium rounded-lg transition-colors"
+          >
+            Back to Sidebar
+          </button>
+        </div>
+      )}
     </div>
   );
 }
